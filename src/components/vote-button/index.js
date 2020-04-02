@@ -3,57 +3,28 @@ import React from "react";
 class VoteButton extends React.Component {
   constructor(props) {
     super(props);
-    // this.message = faker.lorem.words();
-    // Set initial state
-
     this.state = {
-      number: 10
+      counter: 10
     };
-
+    this.text = this.props.voteType === "upVote" ? "Upvote" : "Downvote";
     this.handleClick = this.handleClick.bind(this);
   }
 
-  voteFunction(num) {
-    if (this.props.voteType === "upVote") {
-      num++;
-    } else {
-      num--;
-    }
-    return num;
-  }
-
-  voteText(text) {
-    if (this.props.voteType === "upVote") {
-      text = `Upvote`;
-    } else {
-      text = "Downvote";
-    }
-    return text;
-  }
-
   handleClick() {
-    this.setState({
-      number: this.voteFunction(this.state.number)
+    this.setState((state, props) => {
+      let updatedCounter = state.counter;
+      props.voteType === "upVote" ? updatedCounter++ : updatedCounter--;
+      return {
+        counter: updatedCounter
+      };
     });
   }
 
-  disable(num) {
-    if (num === 0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   render() {
-    const isEnabled = !this.state.number;
     return (
-      <div className="vote-container">
-        <button onClick={this.handleClick} disabled={isEnabled}>
-          <p>{this.voteText(this.state.text)}</p>
-          <span>{this.state.number}</span>
-        </button>
-      </div>
+      <button onClick={this.handleClick} disabled={!this.state.counter}>
+        {this.text} {this.state.counter}
+      </button>
     );
   }
 }
