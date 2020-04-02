@@ -6,7 +6,7 @@ function App() {
   return (
     <div className="App">
       <VoteButton voteType="upVote" />
-      <VoteButton voteType="downVote" disabled={true} />
+      <VoteButton voteType="downVote" />
     </div>
   );
 }
